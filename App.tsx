@@ -3,12 +3,10 @@ import {
   Jost_600SemiBold,
   useFonts,
 } from '@expo-google-fonts/jost';
-import { Confirmation } from '@screens/Confirmation';
-import { UserIdentification } from '@screens/UserIdentification';
-import { Welcome } from '@screens/Welcome';
 import AppLoading from 'expo-app-loading';
 import React from 'react';
 import { View } from 'react-native';
+import { Routes } from '@routes/index';
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -20,9 +18,7 @@ const App = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <Welcome /> */}
-      {/* <UserIdentification /> */}
-      <Confirmation />
+      <Routes />
     </View>
   );
 };

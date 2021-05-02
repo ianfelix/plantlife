@@ -1,5 +1,7 @@
 import wateringImg from '@assets/watering.png';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
 import colors from '@styles/colors';
 import fonts from '@styles/fonts';
 import React from 'react';
@@ -14,6 +16,12 @@ import {
 } from 'react-native';
 
 export const Welcome = () => {
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    navigation.navigate('UserIdentification');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
@@ -31,7 +39,10 @@ export const Welcome = () => {
           sempre que precisar.
         </Text>
 
-        <TouchableOpacity activeOpacity={0.7} style={styles.button}>
+        <TouchableOpacity
+          onPress={handlePress}
+          activeOpacity={0.7}
+          style={styles.button}>
           <Text>
             <Feather name='chevron-right' color={colors.white} size={20} />
           </Text>

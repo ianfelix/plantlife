@@ -8,6 +8,7 @@ export const Confirmation = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.emoji}>😄</Text>
+
       <View style={styles.contentText}>
         <Text style={styles.title}>Prontinho</Text>
         <Text style={styles.paragraph}>
