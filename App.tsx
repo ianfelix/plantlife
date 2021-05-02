@@ -3,6 +3,7 @@ import {
   Jost_600SemiBold,
   useFonts,
 } from '@expo-google-fonts/jost';
+import { Confirmation } from '@screens/Confirmation';
 import { UserIdentification } from '@screens/UserIdentification';
 import { Welcome } from '@screens/Welcome';
 import AppLoading from 'expo-app-loading';
@@ -19,7 +20,9 @@ const App = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <UserIdentification />
+      {/* <Welcome /> */}
+      {/* <UserIdentification /> */}
+      <Confirmation />
     </View>
   );
 };

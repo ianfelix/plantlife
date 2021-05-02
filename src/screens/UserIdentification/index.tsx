@@ -51,7 +51,7 @@ export const UserIdentification = () => {
             />
 
             <View style={styles.footer}>
-              <Button />
+              <Button text='Confirmar' />
             </View>
           </View>
         </View>
