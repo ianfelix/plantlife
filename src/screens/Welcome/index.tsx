@@ -1,7 +1,6 @@
 import wateringImg from '@assets/watering.png';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
 import colors from '@styles/colors';
 import fonts from '@styles/fonts';
 import React from 'react';
