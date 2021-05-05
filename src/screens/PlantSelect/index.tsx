@@ -1,5 +1,6 @@
 import { EnvironmentButton } from '@components/EnvironmentButton';
 import { Header } from '@components/Header';
+import { Load } from '@components/Load';
 import { PlantCardPrimary } from '@components/PlantCardPrimary';
 import { api } from '@services/api';
 import colors from '@styles/colors';
@@ -29,6 +30,7 @@ export const PlantSelect = () => {
   const [plants, setPlants] = useState<PlantProps[]>([]);
   const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
   const [environmentSelected, setEnvironmentSelected] = useState('all');
+  const [loading, setLoading] = useState(true);
 
   const handlePressActive = (environment: string) => {
     setEnvironmentSelected(environment);
@@ -51,7 +53,7 @@ export const PlantSelect = () => {
       setEnvironments([
         {
           key: 'all',
-          title: 'todos',
+          title: 'Todos',
         },
         ...data,
       ]);
@@ -63,8 +65,11 @@ export const PlantSelect = () => {
       const { data } = await api.get('plants?_sort=name&_order=asc');
 
       setPlants(data);
+      setLoading(false);
     })();
   }, []);
+
+  if (loading) return <Load />;
 
   return (
     <View style={styles.container}>
