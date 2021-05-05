@@ -1,11 +1,71 @@
 import { EnvironmentButton } from '@components/EnvironmentButton';
 import { Header } from '@components/Header';
+import { PlantCardPrimary } from '@components/PlantCardPrimary';
+import { api } from '@services/api';
 import colors from '@styles/colors';
 import fonts from '@styles/fonts';
-import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+
+interface EnvironmentProps {
+  key: string;
+  title: string;
+}
+interface PlantProps {
+  id: string;
+  name: string;
+  about: string;
+  water_tips: string;
+  photo: string;
+  environments: [string];
+  frequency: {
+    times: number;
+    repeat_every: string;
+  };
+}
 
 export const PlantSelect = () => {
+  const [environments, setEnvironments] = useState<EnvironmentProps[]>([]);
+  const [plants, setPlants] = useState<PlantProps[]>([]);
+  const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
+  const [environmentSelected, setEnvironmentSelected] = useState('all');
+
+  const handlePressActive = (environment: string) => {
+    setEnvironmentSelected(environment);
+
+    if (environment === 'all') return setFilteredPlants(plants);
+
+    const filtered = plants.filter((plant) =>
+      plant.environments.includes(environment),
+    );
+
+    setFilteredPlants(filtered);
+  };
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await api.get(
+        'plants_environments?_sort=title&_order=asc',
+      );
+
+      setEnvironments([
+        {
+          key: 'all',
+          title: 'todos',
+        },
+        ...data,
+      ]);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await api.get('plants?_sort=name&_order=asc');
+
+      setPlants(data);
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Header />
@@ -17,12 +77,26 @@ export const PlantSelect = () => {
 
       <View>
         <FlatList
-          keyExtractor={(item) => String(item)}
-          data={[1, 2, 3, 4, 5, 6]}
-          renderItem={({ item }) => <EnvironmentButton title='Sala' />}
+          data={environments}
+          renderItem={({ item }) => (
+            <EnvironmentButton
+              title={item.title}
+              active={item.key === environmentSelected}
+              onPress={() => handlePressActive(item.key)}
+            />
+          )}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.contentContainerStyle}
+        />
+      </View>
+
+      <View style={styles.plants}>
+        <FlatList
+          data={filteredPlants}
+          renderItem={({ item }) => <PlantCardPrimary data={item} />}
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
         />
       </View>
     </View>
@@ -56,5 +130,12 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     marginTop: 24,
     paddingLeft: 32,
+    marginBottom: 40,
+  },
+
+  plants: {
+    flex: 1,
+    paddingHorizontal: 32,
+    justifyContent: 'center',
   },
 });

@@ -7,7 +7,8 @@
       "@screens/*": ["./src/screens/*"],
       "@styles/*": ["./src/styles/*"],
       "@assets/*": ["./src/assets/*"],
-      "@routes/*": ["./src/routes/*"]
+      "@routes/*": ["./src/routes/*"],
+      "@services/*": ["./src/services/*"]
     },
     "strict": true
   }
